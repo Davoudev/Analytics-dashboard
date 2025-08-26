@@ -49,7 +49,7 @@ const items = [
   },
   {
     title: "Inbox",
-    url: "#",
+    url: "/payments",
     icon: Inbox,
   },
   {
@@ -59,7 +59,7 @@ const items = [
   },
   {
     title: "Search",
-    url: "#",
+    url: "/users/test",
     icon: Search,
   },
   {
@@ -77,7 +77,7 @@ const AppSidebar = () => {
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
               <Link href="/">
-                <Image src="/logo.svg" alt="Logo Icon" width={20} height={20} />
+                <Image src="/logo.jpg" alt="Logo Icon" width={20} height={20} />
                 <span>Analytics Dashboard</span>
               </Link>
             </SidebarMenuButton>

@@ -3,6 +3,7 @@ import AppChartBar from "@/components/AppChartBar";
 import AppPieChart from "@/components/AppPieChart";
 import CardList from "@/components/CardList";
 import TodoList from "@/components/TodoList";
+import Script from "next/script";
 
 export default function Home() {
   return (
@@ -25,6 +26,10 @@ export default function Home() {
       <div className="bg-primary-foreground p-4 rounded-lg  ">
         <CardList title="Popular Content" />
       </div>
+      <Script
+        src="https://cdn.jotfor.ms/agent/embedjs/0198e5ae56ca745e8b3cb537b88bd052e4f3/embed.js"
+        strategy="lazyOnload"
+      ></Script>
     </div>
   );
 }
