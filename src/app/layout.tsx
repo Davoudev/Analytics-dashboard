@@ -5,6 +5,7 @@ import AppSidebar from "@/components/AppSidebar";
 import Navbar from "@/components/Navbar";
 import { ThemeProvider } from "@/components/providers/ThemeProviders";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import Script from "next/script";
 import { cookies } from "next/headers";
 
 const geistSans = Geist({
@@ -49,6 +50,10 @@ export default async function RootLayout({
             </main>
           </SidebarProvider>
         </ThemeProvider>
+        <Script
+          src="https://cdn.jotfor.ms/agent/embedjs/0198e5ae56ca745e8b3cb537b88bd052e4f3/embed.js"
+          strategy="lazyOnload"
+        ></Script>
       </body>
     </html>
   );
