@@ -8,31 +8,42 @@ import {
   type ChartConfig,
 } from "@/components/ui/chart";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import { useEffect, useState } from "react";
+import { getEconomicData } from "@/app/actions/economicData";
 
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
+  gdp_growth: {
+    label: "GDP Growth",
     color: "var(--chart-1)",
   },
-  mobile: {
-    label: "Mobile",
+  unemployment_rate: {
+    label: "Unemployment Rate",
     color: "var(--chart-4)",
   },
 } satisfies ChartConfig;
 
-const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
-];
+interface EconomicData {
+  month: string;
+  gdp_growth: number;
+  unemployment_rate: number;
+  id: string;
+}
 
 const AppChartBar = () => {
+  const [chartData, setChartData] = useState<EconomicData[]>([]);
+
+  // Initial data fetch
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getEconomicData();
+      setChartData(data);
+    };
+    fetchData();
+  }, []);
+
   return (
     <div>
-      <h1 className="text-lg font-medium mb-6">total Revenue</h1>
+      <h1 className="text-lg font-medium mb-6">Economic Data</h1>
       <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
         <BarChart accessibilityLayer data={chartData}>
           <XAxis
@@ -43,11 +54,15 @@ const AppChartBar = () => {
             tickFormatter={(value) => value.slice(0, 3)}
           />
           <YAxis tickLine={false} tickMargin={10} axisLine={false} />
-          <CartesianGrid vertical={false} />{" "}
+          <CartesianGrid vertical={false} />
           <ChartTooltip content={<ChartTooltipContent />} />
           <ChartLegend content={<ChartLegendContent />} />
-          <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-          <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
+          <Bar dataKey="gdp_growth" fill="var(--color-gdp_growth)" radius={4} />
+          <Bar
+            dataKey="unemployment_rate"
+            fill="var(--color-unemployment_rate)"
+            radius={4}
+          />
         </BarChart>
       </ChartContainer>
     </div>

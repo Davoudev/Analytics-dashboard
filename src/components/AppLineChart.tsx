@@ -5,27 +5,40 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "./ui/chart";
+} from "@/components/ui/chart";
+import { useEffect, useState } from "react";
+import { getEconomicData } from "@/app/actions/economicData";
 
-const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
-];
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
+  gdp_growth: {
+    label: "GDP Growth",
     color: "var(--chart-1)",
   },
-  mobile: {
-    label: "Mobile",
+  unemployment_rate: {
+    label: "Unemployment Rate",
     color: "var(--chart-2)",
   },
 } satisfies ChartConfig;
+
+interface EconomicData {
+  month: string;
+  gdp_growth: number;
+  unemployment_rate: number;
+  id: string;
+}
+
 const AppLineChart = () => {
+  const [chartData, setChartData] = useState<EconomicData[]>([]);
+
+  // Initial data fetch
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getEconomicData();
+      setChartData(data);
+    };
+    fetchData();
+  }, []);
+
   return (
     <ChartContainer config={chartConfig} className="mt-6">
       <LineChart
@@ -47,16 +60,16 @@ const AppLineChart = () => {
         <YAxis tickLine={false} axisLine={false} tickMargin={8} />
         <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
         <Line
-          dataKey="desktop"
+          dataKey="gdp_growth"
           type="monotone"
-          stroke="var(--color-desktop)"
+          stroke="var(--color-gdp_growth)"
           strokeWidth={2}
           dot={false}
         />
         <Line
-          dataKey="mobile"
+          dataKey="unemployment_rate"
           type="monotone"
-          stroke="var(--color-mobile)"
+          stroke="var(--color-unemployment_rate)"
           strokeWidth={2}
           dot={false}
         />
